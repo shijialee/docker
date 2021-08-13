@@ -13,6 +13,8 @@ RUN apt-get update && \
         php-redis \
         php-bcmath \
         php-curl \
+        php-sqlite3 \
+        ca-certificates \
         && rm -rf /var/lib/apt/lists/*
 
 # create /run/php manually because it is usually created by init script
