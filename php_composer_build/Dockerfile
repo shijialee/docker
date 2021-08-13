@@ -1,6 +1,6 @@
 FROM shijialee/php_composer as composer
 
-FROM shijialee/phpfpm_base:c63de97fec4e
+FROM shijialee/phpfpm_base
 
 # bind mount Composer home directory from host to container to enable a persistent cache or share global configuration
 ENV COMPOSER_HOME /tmp
