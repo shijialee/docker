@@ -9,6 +9,8 @@ services:
       - laravel_test_app
     depends_on:
       - php-fpm
+      - redis
+      - db
     volumes:
       - type: bind
         source: ./vhost.conf
@@ -26,6 +28,32 @@ services:
       - type: bind
         source: ${APP_ROOT:?}
         target: /var/www
+  redis:
+    image: "redis:6.2.1-buster"
+    networks:
+      - laravel_test_app
+    volumes:
+      - type: bind
+        source: ./redis.conf
+        target: /usr/local/etc/redis/redis.conf
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
+  db:
+    image: "mysql:5.7.33"
+    networks:
+      - laravel_test_app
+    environment:
+      - MYSQL_ROOT_PASSWORD=app
+      - MYSQL_DATABASE=laravel_test
+      - MYSQL_USER=laravel_test
+      - MYSQL_PASSWORD=laravel_test
+    volumes:
+      - type: volume
+        source: laravel-test-db-data
+        target: /var/lib/mysql
+    command: '--default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci'
 
 networks:
   laravel_test_app:
+
+volumes:
+  laravel-test-db-data:
