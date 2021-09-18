@@ -1,3 +1,5 @@
 tmp
 *.bak
 .env
+docker-compose.override.yml
+.laravel.env

@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  lb:
+    image: "shijialee/load_balancer:88d35b073ec3"
+    ports:
+      - "8080:80"
+    networks:
+      - test_app
+    depends_on:
+      - php-fpm
+    volumes:
+      - type: bind
+        source: ./vhost.conf
+        target: /etc/nginx/conf.d/vhost.conf
+      - type: bind
+        source: /vagrant/www/test.example.com/public
+        target: /var/www/test.example.com/public
+    environment:
+      NGINX_ENTRYPOINT_WORKER_PROCESSES_AUTOTUNE: 1
+  php-fpm:
+    image: "shijialee/phpfpm"
+    networks:
+      - test_app
+    volumes:
+      - type: bind
+        read_only: true
+        source: ${APP_ROOT:?}
+        target: /var/www
+
+networks:
+  test_app:

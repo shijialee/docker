@@ -1,7 +1,8 @@
 FROM shijialee/phpfpm_base:3c1d767cab76
 LABEL maintainer="qiang@cpan.org"
 
-COPY fpm/   /etc/php/7.2/fpm/pool.d/
+# for dev environment
+RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
 
 EXPOSE 9000
 
