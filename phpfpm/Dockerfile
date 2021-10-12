@@ -1,4 +1,4 @@
-FROM shijialee/phpfpm_base:3c1d767cab76
+FROM shijialee/phpfpm_base:0929001
 LABEL maintainer="qiang@cpan.org"
 
 # for dev environment
